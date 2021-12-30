@@ -4,8 +4,9 @@ import { CarList, Container, Header, HeaderContent, TotalCars } from './styles';
 import { StatusBar } from 'react-native';
 import Logo from '../../assets/logo.svg';
 import { Car } from '../../Components/Car';
+import { useNavigation, NavigationProp, ParamListBase } from '@react-navigation/native';
 
-const data = [
+const data = 
   {
     brand: 'audi', 
     name: 'rs5 coupé', 
@@ -13,12 +14,19 @@ const data = [
       period: 'ao dia', 
       price: 120
     },
-    thumbnail: 'https://images.unsplash.com/photo-1612468008274-9445bd56161e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1099&q=80',
+    thumbnail: 'https://www.downloadclipart.net/large/audi.png',
   }
-]
+
 
 
 export function Home() {
+  const {navigate}: NavigationProp<ParamListBase> = useNavigation();
+  
+  function handleCarDetails() {
+    console.log('aqui')
+    navigate('CarDetails');
+  }
+  
   return (
     <Container>
       <StatusBar 
@@ -42,8 +50,13 @@ export function Home() {
       </Header>
 
       <CarList 
-        data={data}
-        renderItem={({item}) => <Car data={data[0]} />}
+        data={[1,2,3,4,5,6,7]}
+        renderItem={({item}) => (
+        <Car 
+          data={data} 
+          onPress={handleCarDetails}
+        />
+        )}
         keyExtractor={item => String(item)}
       />
 
