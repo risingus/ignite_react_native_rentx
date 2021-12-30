@@ -23,6 +23,7 @@ export function Home() {
   const {navigate}: NavigationProp<ParamListBase> = useNavigation();
   
   function handleCarDetails() {
+    console.log('aqui')
     navigate('CarDetails');
   }
   
