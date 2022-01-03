@@ -1,5 +1,6 @@
 import React from 'react';
 import { BorderlessButtonProps } from 'react-native-gesture-handler';
+import { useNavigation, NavigationProp, ParamListBase } from '@react-navigation/native';
 import {MaterialIcons} from '@expo/vector-icons';
 import { useTheme } from 'styled-components';
 import { 
@@ -12,6 +13,9 @@ interface BackButtonProps extends BorderlessButtonProps {
 
 export function BackButton({color, ...rest}: BackButtonProps) {
   const theme = useTheme();
+
+  const {goBack}: NavigationProp<ParamListBase> = useNavigation();
+
   return (
     <Container {...rest}>
       <MaterialIcons 

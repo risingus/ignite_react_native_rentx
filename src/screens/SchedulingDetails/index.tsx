@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigation, NavigationProp, ParamListBase } from '@react-navigation/native';
 import { useTheme } from 'styled-components';
 import { RFValue } from 'react-native-responsive-fontsize';
 import {Feather} from '@expo/vector-icons';
@@ -42,6 +43,16 @@ import { Button } from '../../Components/Button';
 
 export function SchedulingDetails() {
   const theme = useTheme();
+  const {navigate, goBack}: NavigationProp<ParamListBase> = useNavigation();
+
+  function handleConfirm() {
+    navigate('SchedulingComplete');
+  }
+
+  function handleBack() {
+    goBack();
+  }
+
   return (
     <Container>
       <StatusBar 
@@ -51,7 +62,7 @@ export function SchedulingDetails() {
       />
       <Header>
         <BackButton
-          onPress={() => {}}
+          onPress={handleBack}
         />
       </Header>
 
@@ -116,7 +127,11 @@ export function SchedulingDetails() {
       </Content>
 
       <Footer>
-        <Button title='Confirmar' />
+        <Button
+          color={theme.colors.success}
+          title='Alugar agora' 
+          onPress={handleConfirm}
+        />
       </Footer>
 
     </Container>

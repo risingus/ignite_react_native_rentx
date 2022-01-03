@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useState} from 'react';
+import { useNavigation, NavigationProp, ParamListBase } from '@react-navigation/native';
 import { StatusBar } from 'react-native';
 import { BackButton } from '../../Components/BackButton';
 import { useTheme } from 'styled-components';
@@ -15,11 +16,36 @@ import {
   Title
 } from './styles';
 import { Button } from '../../Components/Button';
-import { Calendar } from '../../Components/Calendar';
+import { Calendar, DayProps } from '../../Components/Calendar';
 
 
 export function Scheduling() {
   const theme = useTheme()
+  const {navigate, goBack}: NavigationProp<ParamListBase> = useNavigation();
+  const [lastSelectedDate, setLastSelectedDate] = useState<DayProps>({} as DayProps)
+
+  function handleConfirmRental() {
+    navigate('SchedulingDetails')
+  }
+
+  function handleBack() {
+    goBack()
+  }
+
+  function handleDateChange(date: DayProps) {
+    let start = !lastSelectedDate.timestamp ? date : lastSelectedDate;
+    let end = date;
+
+    if (start.timestamp > end.timestamp) {
+      start = end;
+      end = start;
+    }
+
+    setLastSelectedDate(end);
+
+    const interval = 
+  }
+
   return (
     <Container>
       <Header>
@@ -30,7 +56,7 @@ export function Scheduling() {
         />
         
         <BackButton 
-          onPress={() => {}}
+          onPress={handleBack}
           color={theme.colors.shape}
         />
 
@@ -57,11 +83,17 @@ export function Scheduling() {
       </Header>
 
       <Content>
-        <Calendar />
+        <Calendar 
+          markedDates={}
+          onDayPress={handleChangeDate}
+        />
       </Content>
 
       <Footer>
-        <Button title="confirmar"/>
+        <Button 
+        title="Confirmar"
+        onPress={handleConfirmRental}  
+      />
       </Footer>
 
     </Container>
