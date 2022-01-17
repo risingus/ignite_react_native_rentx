@@ -2,12 +2,13 @@ import React from 'react';
 import { 
   Calendar as CustomCalendar,
   LocaleConfig,
-  DateCallackHandler
+  DateCallbackHandler
 } from 'react-native-calendars';
 import {Feather} from '@expo/vector-icons'
 import { useTheme } from 'styled-components';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { ptBr } from './localeConfig';
+import {generateInterval} from './generateInterval';
 
 
 LocaleConfig.locales['pt-br'] = ptBr;
@@ -84,5 +85,6 @@ function Calendar({
 export {
   Calendar,
   MarkedDateProps,
-  DayProps
+  DayProps,
+  generateInterval
 }

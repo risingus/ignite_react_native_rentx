@@ -22,7 +22,6 @@ export function Car({
   },
   ...rest
 }: CarProps) {
-  console.log(fuel_type)
   const MotorIcon = getAccessoryImg(fuel_type);
   return (
     <Container {...rest}>
