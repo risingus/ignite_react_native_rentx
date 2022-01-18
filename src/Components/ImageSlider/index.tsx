@@ -39,8 +39,6 @@ export function ImageSlider({imagesUrl}: ImageSliderProps) {
           ))
         }
       </ImagesIndexes>
-
-      
         <FlatList 
           data={imagesUrl}
           keyExtractor={key => key}
@@ -56,11 +54,7 @@ export function ImageSlider({imagesUrl}: ImageSliderProps) {
             </CarImageWrapper>
           )}
         />
-       
-      
-
     </Container>
-  
   )
 }
 
