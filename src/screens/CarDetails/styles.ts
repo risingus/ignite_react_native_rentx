@@ -19,18 +19,6 @@ export const Header = styled.View`
 export const CarImages = styled.View`
   margin: ${getStatusBarHeight() + 32}px 0 0 0;
 `;
-
-export const Content = styled.ScrollView.attrs({
-  contentContainerStyle: {
-    padding: 24,
-    alignItems: 'center',
-  },
-  showVerticalScrollIndicator: false
-})`
-
-
-`;
-
 export const Details = styled.View`
   width: 100%;
   flex-direction: row;

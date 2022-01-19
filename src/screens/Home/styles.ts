@@ -8,7 +8,6 @@ import { CarDTO } from '../../dtos/CarDTO';
 export const Container = styled.View`
   flex: 1;
   background: ${({theme}) => theme.colors.background_primary};
-
 `;
 
 export const Header = styled.View`
@@ -39,16 +38,4 @@ export const CarList = styled(FlatList as new (props: FlatListProps<CarDTO>) => 
   showsVerticalScrollIndicator: false
 })`
 
-`;
-
-export const MyCarsButton = styled(RectButton)`
-  width: 60px;
-  height: 60px;
-  background: ${({theme}) => theme.colors.main};
-  justify-content: center;
-  align-items: center;
-  border-radius: 30px;
-  position: absolute;
-  bottom: 13px;
-  right: 22px;
 `;

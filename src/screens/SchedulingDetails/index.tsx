@@ -125,17 +125,6 @@ export function SchedulingDetails() {
           </Rent>
         </Details>
 
-       <Accessories>
-          {
-            car.accessories.map(accessory => (
-              <Accessory 
-                name={accessory.name}
-                key={accessory.type}
-                icon={getAccessoryImg(accessory.type)} 
-              />
-            ))
-          }
-        </Accessories>
 
         <RentalPeriod>
           <CalendarIcon>
@@ -170,6 +159,20 @@ export function SchedulingDetails() {
             <RentalPriceTotal>R$ {rentTotal}</RentalPriceTotal>
           </RentalPriceDetails>
         </RentalPrice>
+
+       <Accessories>
+          {
+            car.accessories.map(accessory => (
+              <Accessory 
+                name={accessory.name}
+                key={accessory.type}
+                icon={getAccessoryImg(accessory.type)} 
+              />
+            ))
+          }
+        </Accessories>
+
+        
       </Content>
 
       <Footer>
