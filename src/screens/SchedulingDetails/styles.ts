@@ -53,7 +53,7 @@ export const Brand = styled.Text`
 export const Name = styled.Text`
   font-family: ${({theme}) => theme.fonts.secondary_500};
   color: ${({theme}) => theme.colors.title};
-  font-size: ${RFValue(25)}px;
+  font-size: ${RFValue(20)}px;
   text-transform: uppercase;
 `;
 
@@ -71,7 +71,7 @@ export const Period = styled.Text`
 export const Price = styled.Text`
   font-family: ${({theme}) => theme.fonts.secondary_500};
   color: ${({theme}) => theme.colors.main};
-  font-size: ${RFValue(25)}px;
+  font-size: ${RFValue(20)}px;
   text-transform: uppercase;
 `;
 

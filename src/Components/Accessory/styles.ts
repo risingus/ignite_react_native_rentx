@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 
 
 export const Container = styled.View`
-  width: ${RFValue(105)}px;
+  width: ${RFValue(90)}px;
   height: ${RFValue(90)}px;
   justify-content: center;
   align-items: center;
@@ -15,5 +15,5 @@ export const Container = styled.View`
 export const Name = styled.Text`
   font-family: ${({theme}) => theme.fonts.primary_500};
   color: ${({theme}) => theme.colors.text};
-  font-size: ${RFValue(13)}px;
+  font-size: ${RFValue(10)}px;
 `;

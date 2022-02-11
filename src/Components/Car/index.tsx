@@ -13,10 +13,8 @@ export function Car({
   data: {
     brand, 
     name, 
-    rent: {
-      period, 
-      price
-    },
+    period, 
+    price,
     thumbnail,
     fuel_type
   },
