@@ -8,8 +8,14 @@ import {
   ImagesIndexes 
 } from './style';
 
+interface Photos {
+  id: string;
+  car_id: string;
+  photo: string;
+}
+
 interface ImageSliderProps {
-  imagesUrl: string[];
+  images: Photos[];
 }
 
 interface ChangeImageProps {
@@ -17,7 +23,7 @@ interface ChangeImageProps {
   changed: ViewToken[];
 }
 
-export function ImageSlider({imagesUrl}: ImageSliderProps) {
+export function ImageSlider({images}: ImageSliderProps) {
   const [imageIndex, setImageIndex] = useState(0);
 
 
@@ -31,7 +37,7 @@ export function ImageSlider({imagesUrl}: ImageSliderProps) {
 
       <ImagesIndexes>
         {
-          imagesUrl.map((_, index) => (
+          images.map((_, index) => (
             <ImageIndex 
               key={String(index)} 
               active={index === imageIndex} 
@@ -40,15 +46,15 @@ export function ImageSlider({imagesUrl}: ImageSliderProps) {
         }
       </ImagesIndexes>
         <FlatList 
-          data={imagesUrl}
-          keyExtractor={key => key}
+          data={images}
+          keyExtractor={key => key.id}
           horizontal
           showsHorizontalScrollIndicator={false}
           onViewableItemsChanged={indexChanged.current}
           renderItem={({item}) => (
             <CarImageWrapper>
               <CarImage 
-                source={{uri: item}}
+                source={{uri: item.photo}}
                 resizeMode='contain'
               />
             </CarImageWrapper>
