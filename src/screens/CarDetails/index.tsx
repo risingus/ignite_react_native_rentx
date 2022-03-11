@@ -81,9 +81,6 @@ export function CarDetails() {
     })
   }
 
-  function handleBack() {
-    goBack();
-  }
   
   return (
     <Container>
@@ -102,9 +99,7 @@ export function CarDetails() {
         }]}
       >
         <Header>
-          <BackButton
-            onPress={handleBack}
-          />
+          <BackButton/>
         </Header>
 
         <CarImages>

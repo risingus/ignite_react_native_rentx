@@ -39,11 +39,6 @@ export function MyCars() {
   const [cars, setCars] = useState<CarProps[]>([]);
   const [loading, setLoading] = useState(true);
 
-  function handleBack() {
-    goBack();
-  }
-
-
   useEffect(() => {
     async function fetchCars() {
       try {
@@ -68,10 +63,7 @@ export function MyCars() {
           backgroundColor="transparent"
         />
         
-        <BackButton 
-          onPress={handleBack}
-          color={theme.colors.shape}
-        />
+        <BackButton color={theme.colors.shape} />
 
         <Title>
           Seus agendamentos,{'\n'}

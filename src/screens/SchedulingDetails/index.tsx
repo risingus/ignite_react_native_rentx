@@ -104,9 +104,7 @@ export function SchedulingDetails() {
         translucent
       />
       <Header>
-        <BackButton
-          onPress={handleBack}
-        />
+        <BackButton />
       </Header>
 
       <CarImages>
