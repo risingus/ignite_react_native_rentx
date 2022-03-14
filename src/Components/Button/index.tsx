@@ -10,22 +10,21 @@ import {
 interface ButtonProps extends RectButtonProps{
   title: string;
   color?: string;
-  enabled?: boolean;
   loading?: boolean;
+  light?: boolean; 
 }
 
 export function Button({
   title,
   color,
   loading = false,
-  enabled = true,
+  light = false,
   ...rest
 }: ButtonProps) {
   const theme = useTheme();
   return (
     <Container
       loading={loading}
-      enabled={enabled}
       color={color}
       {...rest} 
     >
@@ -35,7 +34,7 @@ export function Button({
           <ActivityIndicator color={theme.colors.shape}/>
         )
         : (
-          <Title>
+          <Title light={light}>
             {title}
           </Title>
         )

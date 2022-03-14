@@ -1,6 +1,5 @@
 import React from 'react';
 import { About, Brand, CarImage, Container, Details, Name, Period, Price, Rent, Type } from './styles';
-import GasolineSvg from '../../assets/gasoline.svg';
 import { RectButtonProps } from 'react-native-gesture-handler';
 import {CarDTO} from '../../dtos/CarDTO';
 import { getAccessoryImg } from '../../utils/getAccessoryIcons';
