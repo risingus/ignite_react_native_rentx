@@ -24,12 +24,14 @@ import {
   Form,
   Footer
 } from "./styles";
+import { useAuth } from "../../hooks/auth";
 
 export function SignIn() {
   const theme = useTheme()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const {navigate}: NavigationProp<ParamListBase> = useNavigation();
+  const {signIn} = useAuth();
 
   async function handleSignIn() {
 
@@ -45,7 +47,7 @@ export function SignIn() {
       })
   
       await schema.validate({email, password})
-      // TODO: Criar autenticação com api.
+      signIn({email, password});
 
     } catch (error) {
       if (error instanceof yup.ValidationError) {
@@ -117,7 +119,7 @@ export function SignIn() {
             <Button
               title="Criar conta gratuita"
               onPress={handleNewAccount}
-              enabled={false}
+              enabled={true}
               loading={false}
               light
               color={theme.colors.background_secondary}
