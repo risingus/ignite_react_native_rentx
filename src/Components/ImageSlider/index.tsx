@@ -9,9 +9,8 @@ import {
 } from './style';
 
 interface Photos {
-  id: string;
-  car_id: string;
-  photo: string;
+	id: string;
+	photo: string;
 }
 
 interface ImageSliderProps {
