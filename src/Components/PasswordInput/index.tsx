@@ -38,32 +38,33 @@ export function PasswordInput({
   }
 
   return (
-    <Container>
-      <IconContainer isFocused={isFocused}>
-        <Feather 
-          name={iconName}
-          size={24}
-          color={(isFocused || isFilled) ? theme.colors.main : theme.colors.text_detail}
-        />
-      </IconContainer>
-     
-      <InputText 
-        {...rest}
-        onFocus={handleInputFocus}
-        onBlur={handleInputBlur}
-        secureTextEntry={!isPasswordVisible}
-        isFocused={isFocused}
-      />
+		<Container>
+			<IconContainer isFocused={isFocused}>
+				<Feather
+					name={iconName}
+					size={24}
+					color={isFocused || isFilled ? theme.colors.main : theme.colors.text_detail}
+				/>
+			</IconContainer>
 
-      <BorderlessButton onPress={changePasswordVisibility}>
-        <IconContainer isFocused={isFocused}>
-          <Feather 
-            name={isPasswordVisible ? 'eye' : 'eye-off'}
-            size={24}
-            color={theme.colors.text_detail}
-          />
-        </IconContainer>
-      </BorderlessButton>
-    </Container>
-  )
+			<InputText
+				{...rest}
+				autoCorrect={false}
+				onFocus={handleInputFocus}
+				onBlur={handleInputBlur}
+				secureTextEntry={!isPasswordVisible}
+				isFocused={isFocused}
+			/>
+
+			<BorderlessButton onPress={changePasswordVisibility}>
+				<IconContainer isFocused={isFocused}>
+					<Feather
+						name={isPasswordVisible ? 'eye' : 'eye-off'}
+						size={24}
+						color={theme.colors.text_detail}
+					/>
+				</IconContainer>
+			</BorderlessButton>
+		</Container>
+	);
 }

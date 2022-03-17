@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { 
+  useState,
+} from "react";
 import {
   StatusBar,
   KeyboardAvoidingView,
@@ -34,33 +36,25 @@ export function SignIn() {
   const {signIn} = useAuth();
 
   async function handleSignIn() {
+		try {
+			const schema = yup.object().shape({
+				password: yup.string().required('A senha é obrigatória'),
+				email: yup.string().required('E-mail obrigatório').email('Digite um e-mail válido'),
+			});
 
-    try {
-      const schema = yup.object().shape({
-        password: yup
-          .string()
-          .required('A senha é obrigatória'),
-        email: yup
-          .string()
-          .required('E-mail obrigatório')
-          .email('Digite um e-mail válido'),
-      })
-  
-      await schema.validate({email, password})
-      signIn({email, password});
+			await schema.validate({ email, password });
+			await signIn({ email, password });
+		} catch (error) {
+			if (error instanceof yup.ValidationError) {
+				return Alert.alert('Opa', error.message);
+			}
 
-    } catch (error) {
-      if (error instanceof yup.ValidationError) {
-        return Alert.alert('Opa', error.message);
-      }
-
-      return Alert.alert(
-        'Erro na autenticação',
-        'Ocorreu um erro ao fazer login, verifique as credenciais'
-      )
-    }
-
-  }
+			Alert.alert(
+				'Erro na autenticação',
+				'Ocorreu um erro ao fazer login, verifique as credenciais'
+			);
+		}
+	}
 
   function handleNewAccount() {
     navigate('SignUpFirstStep')

@@ -1,88 +1,96 @@
-import React, {useEffect, useState} from 'react';
-import {api} from '../../services/api';
+import React, { useEffect, useState } from 'react';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { CarList, Container, Header, HeaderContent, TotalCars } from './styles';
 import { StatusBar } from 'react-native';
+import { synchronize } from '@nozbe/watermelondb/sync';
+import { database } from '../../database';
+import { api } from '../../services/api';
+import { useNetInfo } from '@react-native-community/netinfo';
 import Logo from '../../assets/logo.svg';
+import { Car as ModelCar } from '../../database/model/Car';
 import { Car } from '../../Components/Car';
-import { 
-  useNavigation,
-  NavigationProp,
-  ParamListBase
-} from '@react-navigation/native';
-import { CarDTO } from '../../dtos/CarDTO';
+import { useNavigation, NavigationProp, ParamListBase } from '@react-navigation/native';
 import { LoadAnimation } from '../../Components/LoadAnimation';
 
-
 export function Home() {
-  const {navigate}: NavigationProp<ParamListBase> = useNavigation();
-  const [cars, setCars] = useState<CarDTO[]>([]);
-  const [loading, setLoading] = useState(true);
+	const { navigate }: NavigationProp<ParamListBase> = useNavigation();
+	const netInfo = useNetInfo();
+	const [cars, setCars] = useState<ModelCar[]>([]);
+	const [loading, setLoading] = useState(true);
 
+	function handleCarDetails(car: ModelCar) {
+		navigate('CarDetails', { car });
+	}
 
-  function handleCarDetails(car: CarDTO) {
-    navigate('CarDetails', {car});
-  }
+	async function offlineSynchronize() {
+		await synchronize({
+			database,
+			pullChanges: async ({ lastPulledAt }) => {
+				const { data } = await api.get(`cars/sync/pull?lastPulledVersion=${lastPulledAt || 0}`);
 
-  useEffect(() => {
-    async function fetchCars() {
-      try {
-        const response = await api.get('/cars');
-        setCars(response.data);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchCars();
-  }, []);
+				const { changes, latestVersion } = data;
+				return { changes, timestamp: latestVersion };
+			},
+			pushChanges: async ({ changes }) => {
+				const user = changes.users;
+				await api.post('/users/sync', user);
+			},
+		});
+	}
 
-  return (
-    <Container>
-      <StatusBar 
-        barStyle={'light-content'}
-        backgroundColor="transparent"
-        translucent
-      />
-      
-      <Header>
-        <HeaderContent>
+	useEffect(() => {
+		if (netInfo.isConnected) {
+			offlineSynchronize();
+		}
+	}, [netInfo.isConnected]);
 
-          <Logo 
-            width={RFValue(108)}
-            height={RFValue(12)}
-          />
+	useEffect(() => {
+		let isMounted = true;
 
-          {
-           !loading && (
-            <TotalCars>
-              Total de {cars.length} carros
-            </TotalCars>
-           ) 
-          }
-         
+		async function fetchCars() {
+			try {
+				const carCollection = database.get<ModelCar>('cars');
+				const cars = await carCollection.query().fetch();
+				if (isMounted) {
+					setCars(cars);
+				}
+			} catch (error) {
+				console.log(error);
+			} finally {
+				if (isMounted) {
+					setLoading(false);
+				}
+			}
+		}
 
-        </HeaderContent>
-       
-      </Header>
+		fetchCars();
 
-      {
-        loading ?  <LoadAnimation /> : (
+		return () => {
+			isMounted = false;
+		};
+	}, []);
 
-          <CarList 
-            data={cars}
-            renderItem={({item}) => (
-            <Car 
-              data={item} 
-              onPress={() => handleCarDetails(item)}
-            />
-            )}
-            keyExtractor={item => item.id}
-          />
-        )
-      }
-   
-    </Container>
-  )
+	return (
+		<Container>
+			<StatusBar barStyle={'light-content'} backgroundColor="transparent" translucent />
+
+			<Header>
+				<HeaderContent>
+					<Logo width={RFValue(108)} height={RFValue(12)} />
+
+					{!loading && <TotalCars>Total de {cars.length} carros</TotalCars>}
+				</HeaderContent>
+			</Header>
+
+			{loading ? (
+				<LoadAnimation />
+			) : (
+				<CarList
+					data={cars}
+					renderItem={({ item }) => <Car data={item} onPress={() => handleCarDetails(item)} />}
+					keyExtractor={(item) => item.id}
+				/>
+			)}
+		</Container>
+	);
 }
