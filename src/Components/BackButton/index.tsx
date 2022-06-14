@@ -17,7 +17,7 @@ export function BackButton({color, ...rest}: BackButtonProps) {
   const {goBack}: NavigationProp<ParamListBase> = useNavigation();
 
   return (
-    <Container {...rest}>
+    <Container {...rest} onPress={goBack}>
       <MaterialIcons 
         name='chevron-left'
         size={24}

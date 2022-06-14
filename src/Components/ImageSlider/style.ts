@@ -1,40 +1,25 @@
 import styled from 'styled-components/native';
 import {Dimensions} from 'react-native';
-
-interface ImageIndexProps {
-  active: boolean;
-}
+import FastImage from 'react-native-fast-image';
 
 export const Container = styled.View`
-  width: 100%;
-
+	width: 100%;
 `;
 
 export const ImagesIndexes = styled.View`
-  flex-direction: row;
-  align-self: flex-end;
-  padding: 0 24px 0 0;
-`;
-
-export const ImageIndex = styled.View<ImageIndexProps>`
-  width: 6px;
-  height: 6px;
-  background: ${({theme, active}) => 
-    active ? theme.colors.title : theme.colors.shape
-  };
-  margin: 0 0 0 8px;
-  border-radius: 3px;
+	flex-direction: row;
+	align-self: flex-end;
+	padding: 0 24px 0 0;
 `;
 
 export const CarImageWrapper = styled.View`
-  width: ${Dimensions.get('window').width}px;
-  height: 132px;
-  justify-content: center;
-  align-items: center;
+	width: ${Dimensions.get('window').width}px;
+	height: 132px;
+	justify-content: center;
+	align-items: center;
 `;
 
-export const CarImage = styled.Image`
-  width: 280px;
-  height: 132px;
-
+export const CarImage = styled(FastImage)`
+	width: 280px;
+	height: 132px;
 `;
